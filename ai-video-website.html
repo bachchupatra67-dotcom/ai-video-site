@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Video Generator</title>
+    <link rel="stylesheet" href="style.css">
+
+<style>
+body {
+    background: #121212;
+    color: white;
+    text-align: center;
+    font-family: Arial;
+}
+
+textarea {
+    width: 80%;
+    height: 120px;
+    margin: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    background: orange;
+<script>
+function generateVideo() {
+    let text = document.getElementById("textInput").value;
+
+    if (!text) {
+        alert("Enter text first!");
+        return;
+    }
+
+    document.getElementById("output").innerHTML = "⏳ Generating...";
+
+    setTimeout(() => {
+        document.getElementById("output").innerHTML = `
+        <p>✅ Demo Video</p>
+        <video controls width="80%">
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4">
+        </video>`;
+    }, 3000);
+}
+</script>
+
+    border: none;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎬 AI Text to Video</h1>
+
+<textarea id="textInput" placeholder="Enter your script..."></textarea>
+
+<button onclick="generateVideo()">Generate</button>
+
+<div id="output"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
