@@ -7,13 +7,13 @@
 
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
+      font-family: Arial, sans-serif;
       background: #f4f6fb;
     }
 
     header {
-      background: #1e2a38;
+      background: #0f172a;
       color: white;
       padding: 15px;
       text-align: center;
@@ -34,6 +34,35 @@
       padding: 15px;
       border-radius: 12px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    /* AD BANNER */
+    .dynamic-ad-slot {
+      margin: 15px 0;
+    }
+
+    .ad-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .ad-box img {
+      width: 70px;
+      height: 70px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .ad-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: #0f172a;
     }
 
     /* ABOUT */
@@ -45,38 +74,11 @@
       padding-left: 18px;
     }
 
-    /* AD BANNER */
-    .ad-banner {
-      display: flex;
-      align-items: center;
-      background: white;
-      padding: 10px;
-      border-radius: 10px;
-      margin: 15px 0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .ad-banner img {
-      width: 80px;
-      height: 80px;
-      border-radius: 8px;
-      object-fit: cover;
-    }
-
-    .ad-content {
-      margin-left: 15px;
-    }
-
-    .ad-content h3 {
-      margin: 0;
-      font-size: 16px;
-    }
-
     footer {
       text-align: center;
       padding: 15px;
-      font-size: 14px;
       color: gray;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -89,35 +91,42 @@
 
 <section>
 
-  <!-- 🔥 AD BANNER -->
-  <div class="ad-banner">
-    <img id="adImage" src="https://via.placeholder.com/80">
-    <div class="ad-content">
-      <h3 id="adTitle">Loading product...</h3>
-    </div>
+  <!-- 🔥 AD -->
+  <div class="dynamic-ad-slot">Loading Ad...</div>
+
+  <!-- HOME -->
+  <div class="card">
+    <h1>Welcome to StudiesSupport</h1>
+    <p>Your free platform for ICSE & ISC study materials.</p>
   </div>
 
-  <!-- 📘 ABOUT SECTION -->
-  <h1>About StudiesSupport</h1>
+  <!-- 🔥 AD -->
+  <div class="dynamic-ad-slot">Loading Ad...</div>
 
+  <!-- ABOUT -->
   <div class="card about-card">
+    <h1>About StudiesSupport</h1>
+
     <p><b>StudiesSupport</b> is a free educational platform built exclusively for <b>ICSE and ISC students</b>. We believe every student deserves access to clear, well-organized study materials without distractions.</p>
 
     <h2>Our Mission</h2>
-    <p>To make board exam preparation <b>simple, effective, and stress-free</b>. We provide easy English notes, exam-oriented questions, and revision content.</p>
+    <p>To make board exam preparation <b>simple, effective, and stress-free</b>.</p>
 
     <h2>What We Offer</h2>
     <ul>
       <li>Chapter-wise notes</li>
       <li>Short & long answers</li>
-      <li>Important board questions</li>
-      <li>Quick revision PDFs</li>
+      <li>Important questions</li>
+      <li>Revision PDFs</li>
       <li>Exam strategies</li>
     </ul>
 
     <h2>Our Promise</h2>
-    <p>No clutter. No distractions. Just what you need to score high. <b>100% free.</b></p>
+    <p>No clutter. No distractions. <b>100% free.</b></p>
   </div>
+
+  <!-- 🔥 AD -->
+  <div class="dynamic-ad-slot">Loading Ad...</div>
 
 </section>
 
@@ -125,17 +134,30 @@
   © 2026 StudiesSupport
 </footer>
 
-<!-- ⚙️ LOAD AD FROM JSON -->
+<!-- ⚙️ AD SYSTEM -->
 <script>
-fetch('ads.json')
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById("adTitle").innerText = data.name;
-    document.getElementById("adImage").src = data.image;
-  })
-  .catch(() => {
-    document.getElementById("adTitle").innerText = "Free Study Material Available";
-  });
+async function loadAds() {
+  try {
+    const res = await fetch('ads.json');
+    const data = await res.json();
+
+    document.querySelectorAll('.dynamic-ad-slot').forEach(slot => {
+      slot.innerHTML = `
+        <a href="${data.link || '#'}" target="_blank" class="ad-box">
+          <img src="${data.image}" />
+          <div class="ad-text">${data.name}</div>
+        </a>
+      `;
+    });
+
+  } catch (e) {
+    document.querySelectorAll('.dynamic-ad-slot').forEach(slot => {
+      slot.innerHTML = "Ad not available";
+    });
+  }
+}
+
+window.addEventListener("load", loadAds);
 </script>
 
 </body>
