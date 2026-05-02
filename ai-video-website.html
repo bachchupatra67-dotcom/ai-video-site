@@ -1,64 +1,142 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>AI Video Generator</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudiesSupport</title>
 
-<style>
-body {
-    background: #121212;
-    color: white;
-    text-align: center;
-    font-family: Arial;
-}
-
-textarea {
-    width: 80%;
-    height: 120px;
-    margin: 20px;
-}
-
-button {
-    padding: 10px 20px;
-    background: orange;
-<script>
-function generateVideo() {
-    let text = document.getElementById("textInput").value;
-
-    if (!text) {
-        alert("Enter text first!");
-        return;
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f6fb;
     }
 
-    document.getElementById("output").innerHTML = "⏳ Generating...";
+    header {
+      background: #1e2a38;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
 
-    setTimeout(() => {
-        document.getElementById("output").innerHTML = `
-        <p>✅ Demo Video</p>
-        <video controls width="80%">
-        <source src="https://www.w3schools.com/html/mov_bbb.mp4">
-        </video>`;
-    }, 3000);
-}
-</script>
+    section {
+      padding: 20px;
+    }
 
-    border: none;
-    cursor: pointer;
-}
-</style>
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    /* ABOUT */
+    .about-card h2 {
+      margin-top: 15px;
+    }
+
+    .about-card ul {
+      padding-left: 18px;
+    }
+
+    /* AD BANNER */
+    .ad-banner {
+      display: flex;
+      align-items: center;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 15px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .ad-banner img {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .ad-content {
+      margin-left: 15px;
+    }
+
+    .ad-content h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+      color: gray;
+    }
+  </style>
 </head>
 
 <body>
 
-<h1>🎬 AI Text to Video</h1>
+<header>
+  StudiesSupport
+</header>
 
-<textarea id="textInput" placeholder="Enter your script..."></textarea>
+<section>
 
-<button onclick="generateVideo()">Generate</button>
+  <!-- 🔥 AD BANNER -->
+  <div class="ad-banner">
+    <img id="adImage" src="https://via.placeholder.com/80">
+    <div class="ad-content">
+      <h3 id="adTitle">Loading product...</h3>
+    </div>
+  </div>
 
-<div id="output"></div>
+  <!-- 📘 ABOUT SECTION -->
+  <h1>About StudiesSupport</h1>
 
-<script src="script.js"></script>
+  <div class="card about-card">
+    <p><b>StudiesSupport</b> is a free educational platform built exclusively for <b>ICSE and ISC students</b>. We believe every student deserves access to clear, well-organized study materials without distractions.</p>
+
+    <h2>Our Mission</h2>
+    <p>To make board exam preparation <b>simple, effective, and stress-free</b>. We provide easy English notes, exam-oriented questions, and revision content.</p>
+
+    <h2>What We Offer</h2>
+    <ul>
+      <li>Chapter-wise notes</li>
+      <li>Short & long answers</li>
+      <li>Important board questions</li>
+      <li>Quick revision PDFs</li>
+      <li>Exam strategies</li>
+    </ul>
+
+    <h2>Our Promise</h2>
+    <p>No clutter. No distractions. Just what you need to score high. <b>100% free.</b></p>
+  </div>
+
+</section>
+
+<footer>
+  © 2026 StudiesSupport
+</footer>
+
+<!-- ⚙️ LOAD AD FROM JSON -->
+<script>
+fetch('ads.json')
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("adTitle").innerText = data.name;
+    document.getElementById("adImage").src = data.image;
+  })
+  .catch(() => {
+    document.getElementById("adTitle").innerText = "Free Study Material Available";
+  });
+</script>
 
 </body>
 </html>
